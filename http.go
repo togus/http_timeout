@@ -10,7 +10,7 @@ import (
 
 func startHTTPServer(port, timeout int) {
 	http.HandleFunc("/test", getTimeoutHandler(timeout))
-	log.Println("Starting http server on port", port)
+	log.Println("Starting http server on port", port, "and default timeout", timeout)
 	http.ListenAndServe(fmt.Sprintf(":%d", port), nil)
 }
 
