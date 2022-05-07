@@ -26,6 +26,14 @@ func getTimeoutHandler(timeout int) func(http.ResponseWriter, *http.Request) {
 		select {
 		case <-time.After(time.Duration(t) * time.Second):
 			fmt.Fprintf(w, "Waited %d seconds\n", t)
+			fmt.Fprintf(w, "\nDebug headers:\n")
+			for key, value := range r.Header {
+				fmt.Fprintf(w, "%s: ", key)
+				for _, data := range value {
+					fmt.Fprintf(w, "%s", data)
+				}
+				fmt.Fprintf(w, "\n")
+			}
 		case <-ctx.Done():
 			fmt.Fprintf(w, "Error, timeout not reached")
 		}
